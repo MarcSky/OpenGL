@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1412837387 source:/home/juster/labakg/laba1/main.c
+	<stdio.h>
+	<stdlib.h>
+	"GL/gl.h"
+	"GL/glut.h"
+
