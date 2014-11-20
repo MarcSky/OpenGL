@@ -1,7 +1,23 @@
 # depslib dependency file v1.0
-1412837387 source:/home/juster/labakg/laba1/main.c
+1416468527 source:/home/juster/labakg/laba1/main.c
 	<stdio.h>
 	<stdlib.h>
 	"GL/gl.h"
 	"GL/glut.h"
+	"algorithm.h"
+	"file.h"
+	<time.h>
+
+1416468517 source:/home/juster/labakg/laba1/algorithm.c
+	"algorithm.h"
+	<stdio.h>
+
+1414053618 /home/juster/labakg/laba1/algorithm.h
+
+1414055134 source:/home/juster/labakg/laba1/file.c
+	"file.h"
+
+1414055406 /home/juster/labakg/laba1/file.h
+	<stdio.h>
+	<stdlib.h>
 
