@@ -22,11 +22,11 @@
 	<stdio.h>
 	<stdlib.h>
 
-1416468976 source:/home/juster/old/labakg/laba1/algorithm.c
+1418221377 source:/home/juster/old/labakg/laba1/algorithm.c
 	"algorithm.h"
 	<stdio.h>
 
-1414053618 /home/juster/old/labakg/laba1/algorithm.h
+1418211952 /home/juster/old/labakg/laba1/algorithm.h
 
 1414055134 source:/home/juster/old/labakg/laba1/file.c
 	"file.h"
@@ -35,7 +35,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1416991138 source:/home/juster/old/labakg/laba1/main.c
+1418241459 source:/home/juster/old/labakg/laba1/main.c
 	<stdio.h>
 	<stdlib.h>
 	"GL/gl.h"
@@ -44,4 +44,5 @@
 	"file.h"
 	<time.h>
 	<math.h>
+	<stdint.h>
 
