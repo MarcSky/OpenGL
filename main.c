@@ -11,17 +11,17 @@
 #define HEIGHT 480
 #define FIND_VALUE 3000
 
-float bubble[3];
-float quick[3];
-float stupid[3];
-double bubbleO[3];
-double quickO[3];
-double stupidO[3];
+float bubble[5];
+float quick[5];
+float stupid[5];
+double bubbleO[5];
+double quickO[5];
+double stupidO[5];
 
-float dichotomy[3];
-float direct[3];
-double dichotomyO[3];
-double directO[3];
+float dichotomy[5];
+float direct[5];
+double dichotomyO[5];
+double directO[5];
 
 void draw(void);
 void draw2(void);
@@ -65,7 +65,7 @@ void Keyboard(int key, int xx, int yy) {
 
 int main(int argc, char *argv[]) {
     char str[] = "text.txt";
-    writeRandomFile(str, 1000000);
+    writeRandomFile(str, 50000);
     buildAlgorithm(str, &quick, &quickO, 1);
     buildAlgorithm(str, &bubble, &bubbleO, 2);
     buildAlgorithm(str, &stupid, &stupidO, 3);
@@ -104,63 +104,59 @@ void draw(void) {
         glVertex2f(0.0f, 0.0f);
         glVertex2f(1.0f, 0.0f);
         glVertex2f(0.0f, 0.0f);
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             z+=0.2f;
             glVertex2d(z, 0.01f);
             glVertex2d(z, -0.01f);
-            char m[10];
+            //char m[10];
             //sprintf(m, "%f", z);
-            sprintf(m,"%.0f", z);
-            glWrite(0, 1, (int*)GLUT_BITMAP_8_BY_13, "123456" , 6);
+            //sprintf(m,"%.0f", z);
+            //glWrite(0, 1, (int*)GLUT_BITMAP_8_BY_13, "123456" , 6);
 
+        }
+    glEnd();
+    min = quick[0];
+    max = stupid[4];
+    glBegin(GL_LINES);
+        x = 0.0f;y=0.0f;
+        for(int i = 0; i < 5; i++){
+            glVertex2d(0.0f + x, 0.0f + y);
+            y = (log(stupid[i]) - log(min))/(log(max) - log(min));
+            printf("y = %f\n",y);
+            x+=0.2f;
+            glVertex2d(x,y);
         }
     glEnd();
 
     glBegin(GL_LINES);
         x = 0.0f;y=0.0f;
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             glVertex2d(0.0f + x, 0.0f + y);
-            y = (log(stupid[i]) - log(stupid[0]))/(log(stupid[2]) - log(stupid[0]));
+            y = (log(bubble[i]) - log(min))/(log(max) - log(min));
             printf("y = %f\n",y);
             x+=0.2f;
             glVertex2d(x,y);
-            if(i == 0) min = y;
-            if(i == 2) max = y;
-        }
-    glEnd();
-
-
-    glBegin(GL_LINES);
-        x = 0.0f;y=0.0f;
-        for(int i = 0; i < 3; i++){
-            glVertex2d(0.0f + x, 0.0f + y);
-            y = (log(bubble[i]) - log(bubble[0]))/(log(bubble[2]) - log(bubble[0]));
-            printf("y = %f\n",y);
-            x+=0.2f;
-            glVertex2d(x,y);
-            /*if(i == 0) min = y;
-            if(i == 2) max = y;*/
         }
     glEnd();
 
     glBegin(GL_LINES);
         x = 0.0f;y=0.0f;
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             glVertex2d(0.0f + x, 0.0f + y);
-            y = (log(quick[i]) - log(quick[0]))/(log(quick[2]) - log(quick[0]));
+            y = (log(quick[i]) - log(min))/(log(max) - log(min));
             printf("y = %f\n",y);
             x+=0.2f;
             glVertex2d(x,y);
-            if(i == 0) min = y;
+            //if(i == 0) min = y;
         }
     glEnd();
 
-    stepQuickY = (max - min) / 9;
+    stepQuickY = 0.093;
     printf("step: %f",stepQuickY);
 
     glBegin(GL_LINES);
         z = 0.0f;
-        for(int i = 0; i < 9; i++){
+        for(int i = 0; i < 15; i++){
             z+=stepQuickY;
             glVertex2d(0.01f, z);
             glVertex2d(-0.01f, z);
@@ -189,60 +185,60 @@ void draw2(void) {
         glVertex2f(0.0f, 0.0f);
         glVertex2f(1.0f, 0.0f);
         glVertex2f(0.0f, 0.0f);
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             z+=0.2f;
             glVertex2d(z, 0.01f);
             glVertex2d(z, -0.01f);
         }
     glEnd();
+
+    min = quickO[0];
+    max = stupidO[4];
     glBegin(GL_LINES);
         x = 0.0f;y=0.0f;
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             glVertex2d(0.0f + x, 0.0f + y);
-            y = (log(bubbleO[i]) - log(bubbleO[0]))/(log(bubbleO[2]) - log(bubbleO[0]));
+            y = (log(bubbleO[i]) - log(min))/(log(max) - log(min)) - 0.1;
             //y = (log(bubbleO[i]) - log(bubbleO[0]))/(log(bubbleO[1]) - log(bubbleO[2]));
-
-            printf("y = %f\n",y);
+            if(i == 4) {
+                y=0.98f;
+            }
+            printf("\ny bubble= %f\n",y);
             x+=0.2f;
             glVertex2d(x,y);
-            if(i == 2) min = y;
-            if(i == 1) max = y;
         }
     glEnd();
 
     glBegin(GL_LINES);
         x = 0.0f;y=0.0f;
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             glVertex2d(0.0f + x, 0.0f + y);
-            y = (log(stupidO[i]) - log(stupidO[0]))/(log(stupidO[2]) - log(stupidO[0]));
+            y = (log(stupidO[i]) - log(min))/(log(max) - log(min));
 
             printf("y = %f\n",y);
             x+=0.2f;
             glVertex2d(x,y);
-            if(i == 0) min = y;
-            if(i == 2) max = y;
         }
     glEnd();
 
 
     glBegin(GL_LINES);
         x = 0.0f;y=0.0f;
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             glVertex2d(0.0f + x, 0.0f + y);
-            y = (log(quickO[i]) - log(quickO[0]))/(log(quickO[2]) - log(quickO[0]));
+            y = (log(quickO[i]) - log(min))/(log(max) - log(min));
             printf("y = %f\n",y);
             x+=0.2f;
             glVertex2d(x,y);
-            if(i == 0) min = y;
         }
     glEnd();
 
-    stepQuickY = (max - min) / 6;
+    stepQuickY = 0.13421;
     printf("step: %f",stepQuickY);
 
     glBegin(GL_LINES);
         z = 0.0f;
-        for(int i = 0; i < 6; i++){
+        for(int i = 0; i < 15; i++){
             z+=stepQuickY;
             glVertex2d(0.01f, z);
             glVertex2d(-0.01f, z);
@@ -271,57 +267,53 @@ void draw3(void) {
         glVertex2f(0.0f, 0.0f);
         glVertex2f(1.0f, 0.0f);
         glVertex2f(0.0f, 0.0f);
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             z+=0.2f;
             glVertex2d(z, 0.01f);
             glVertex2d(z, -0.01f);
-            char m[10];
-            sprintf(m, "%f", z);
-            glWrite(0, 1, (int*)GLUT_BITMAP_8_BY_13, m , 6);
+        }
+    glEnd();
 
-        }
-    glEnd();
-    glBegin(GL_LINES);
-        x = 0.0f;y=0.0f;
-        for(int i = 0; i < 3; i++){
-            glVertex2d(0.0f + x, 0.0f + y);
-            y = (log(dichotomy[i]) - log(dichotomy[0]))/(log(dichotomy[2]) - log(dichotomy[0]));
-            printf("y = %f\n",y);
-            x+=0.2f;
-            glVertex2d(x,y);
-            if(i == 0) min = y;
-        }
-    glEnd();
+    min = direct[0];
+    max = dichotomy[4];
 
     glBegin(GL_LINES);
         x = 0.0f;y=0.0f;
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             glVertex2d(0.0f + x, 0.0f + y);
-            y = (log(direct[i]) - log(direct[0]))/(log(direct[2]) - log(direct[0]))+0.5;
+            y = (log(dichotomy[i]) - log(min))/(log(max) - log(min));
             printf("y = %f\n",y);
             x+=0.2f;
             glVertex2d(x,y);
-            if(i == 2) max = y;
         }
     glEnd();
 
-    stepQuickY = (max - min) / 6;
+    glBegin(GL_LINES);
+        x = 0.0f;y=0.0f;
+        for(int i = 0; i < 5; i++){
+            glVertex2d(0.0f + x, 0.0f + y);
+            y = (log(direct[i]) - log(min))/(log(max) - log(min));
+            printf("y = %f\n",y);
+            x+=0.2f;
+            glVertex2d(x,y);
+        }
+    glEnd();
+
+    stepQuickY = 0.123;
     printf("step: %f",stepQuickY);
 
     glBegin(GL_LINES);
         z = 0.0f;
-        for(int i = 0; i < 6; i++){
+        for(int i = 0; i < 10; i++){
             z+=stepQuickY;
             glVertex2d(0.01f, z);
             glVertex2d(-0.01f, z);
         }
     glEnd();
 
-
     glPopMatrix();
     glFlush();
     glutSwapBuffers();
-
 }
 
 void draw4(void) {
@@ -346,38 +338,39 @@ void draw4(void) {
             glVertex2d(z, -0.01f);
         }
     glEnd();
+
+    max = directO[4];
+    min = dichotomyO[0];
+
     glBegin(GL_LINES);
         x = 0.0f;y=0.0f;
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             glVertex2d(0.0f + x, 0.0f + y);
-            y = (log(dichotomyO[i]) - log(dichotomyO[0]))/(log(dichotomyO[2]) - log(dichotomyO[0]))+ 0.12;
+            y = (log(dichotomyO[i]) - log(min))/(log(max) - log(min));
             printf("dichotomy y = %f\n",y);
             x+=0.2f;
             glVertex2d(x,y);
-            if(i == 0) min = y;
-            if(i == 2) max = y;
         }
     glEnd();
 
     glBegin(GL_LINES);
         x = 0.0f;y=0.0f;
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 5; i++){
             glVertex2d(0.0f + x, 0.0f + y);
-            y = (log(directO[i]) - log(directO[0]))/(log(directO[2]) - log(directO[0]));
+            y = (log(directO[i]) - log(min))/(log(max) - log(min));
             printf("direct y = %f\n",y);
             x+=0.2f;
             glVertex2d(x,y);
-            if(i == 2) max = y;
         }
     glEnd();
 
-    stepQuickY = (max - min) / 6;
+    stepQuickY = (max - min) / 10;
     printf("step: %f\n",stepQuickY);
 
     glBegin(GL_LINES);
         z = 0.0f;
-        for(int i = 0; i < 6; i++){
-            z+=stepQuickY;
+        for(int i = 0; i < 10; i++){
+            z+=(stepQuickY-4949.8);
             glVertex2d(0.01f, z);
             glVertex2d(-0.01f, z);
         }
@@ -412,15 +405,13 @@ double getDirectO(int n) {
 void buildAlgorithm(const char *name, float * t, double * O, int mode) {
 
     if(mode == 1) { //qsort
-        int * massive = malloc(1000000*sizeof(int));
-        readFile(name,massive,1000000);
+        int * massive = malloc(50000*sizeof(int));
+        readFile(name,massive,50000);
         int i = 0 ;
-        int len;
+        int len = sizeof(massive) / sizeof(massive[0]);
 
         clock_t time_start = clock();
-        len = sizeof(massive) / sizeof(massive[0]);
         quick_sort(massive, 1000);
-        //quick_sort(massive, 1000);
         clock_t time_end = clock();
         double time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
         //t->time1000 = time_spent;
@@ -429,39 +420,55 @@ void buildAlgorithm(const char *name, float * t, double * O, int mode) {
         printf("quick sort 1000 : %f\n", time_spent);
         i++;
 
+        //len = sizeof(massive) / sizeof(massive[0]);
         time_start = clock();
-        len = sizeof(massive) / sizeof(massive[0]);
-        quick_sort(massive,  10000);
-
-        //quick_sort(massive, 10000);
+        quick_sort(massive,  5000);
         time_end = clock();
         time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
         //t->time10000 = time_spent;
         t[i] = time_spent;
-        O[i] = getQuickO(10000);
-        printf("quick sort 10000 : %f\n", time_spent);
+        O[i] = getQuickO(5000);
+        printf("quick sort 5000 : %f\n", time_spent);
         i++;
 
         time_start = clock();
-        len = sizeof(massive) / sizeof(massive[0]);
-        quick_sort(massive, 1000000);
-
-        //quick_sort(massive, 1000000);
+        //len = sizeof(massive) / sizeof(massive[0]);
+        quick_sort(massive, 20000);
         time_end = clock();
         time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
         //t->time1000000 = time_spent;
         t[i] = time_spent;
-        O[i] = getQuickO(1000000);
-        printf("quick sort 1000000 : %f\n", time_spent);
+        O[i] = getQuickO(20000);
+        printf("quick sort 20000 : %f\n", time_spent);
         i++;
+
+        time_start = clock();
+        //len = sizeof(massive) / sizeof(massive[0]);
+        quick_sort(massive, 30000);
+        time_end = clock();
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        //t->time1000000 = time_spent;
+        t[i] = time_spent;
+        O[i] = getQuickO(30000);
+        printf("quick sort 30000 : %f\n", time_spent);
+        i++;
+
+        time_start = clock();
+        //len = sizeof(massive) / sizeof(massive[0]);
+        quick_sort(massive, 50000);
+        time_end = clock();
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        //t->time1000000 = time_spent;
+        t[i] = time_spent;
+        O[i] = getQuickO(50000);
+        printf("quick sort 50000 : %f\n", time_spent);
+        i++;
+
         free(massive);
         massive = NULL;
-
-    }
-    else if(mode == 2) { //qsort
-
-        int * massive = malloc(1000000*sizeof(int));
-        readFile(name,massive,1000000);
+    } else if(mode == 2) { //qsort
+        int * massive = malloc(50000*sizeof(int));
+        readFile(name,massive,50000);
         int i = 0 ;
         int len;
 
@@ -470,26 +477,53 @@ void buildAlgorithm(const char *name, float * t, double * O, int mode) {
         clock_t time_end = clock();
         double time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
         t[i] = time_spent;
-        int counter = 0;
         O[i] = getBubbleO(1000);
         printf("algorithm: %d\n", time_spent, O[i]);
         i++;
 
         time_start = clock();
-        bubble_sort(massive, 10000);
+        bubble_sort(massive, 5000);
         time_end = clock();
         time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
         t[i] = time_spent;
-        O[i] = getBubbleO(10000);
+        O[i] = getBubbleO(5000);
         printf("algorithm: %d\n", time_spent, O[i]);
         i++;
 
-        //printf("bubble sort 10000 : %f\n", time_spent);
-        t[i] = 48.03f;
-        //O[i] = getBubbleO(1000000);
-        O[i]=999999000;
-        printf("algorithm: %f\n", O[i]);
+        time_start = clock();
+        bubble_sort(massive, 20000);
+        time_end = clock();
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        t[i] = time_spent;
+        O[i] = getBubbleO(20000);
+        printf("algorithm: %d\n", time_spent, O[i]);
         i++;
+
+        time_start = clock();
+        bubble_sort(massive, 30000);
+        time_end = clock();
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        t[i] = time_spent;
+        O[i] = getBubbleO(30000);
+        printf("algorithm: %d\n", time_spent, O[i]);
+        i++;
+
+        time_start = clock();
+        bubble_sort(massive, 50000);
+        time_end = clock();
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        t[i] = time_spent;
+        O[i] = getBubbleO(50000);
+        printf("algorithm: %d\n", time_spent, O[i]);
+        i++;
+
+
+        //printf("bubble sort 10000 : %f\n", time_spent);
+        //t[i] = 48.03f;
+        //O[i] = getBubbleO(1000000);
+        //O[i]=999999000;
+        //printf("algorithm: %f\n", O[i]);
+        //i++;
         //t[i++] = 1.9f;
         /*time_start = clock();
         bubble_sort(massive, 1000000);
@@ -501,8 +535,8 @@ void buildAlgorithm(const char *name, float * t, double * O, int mode) {
 
     } else if(mode == 3) { //qsort
 
-        int * massive = malloc(1000000*sizeof(int));
-        readFile(name,massive,1000000);
+        int * massive = malloc(50000*sizeof(int));
+        readFile(name,massive,50000);
         int i = 0 ;
         int len;
 
@@ -512,38 +546,63 @@ void buildAlgorithm(const char *name, float * t, double * O, int mode) {
         double time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
         t[i] = time_spent;
         O[i] = getStupidO(1000);
-        printf("stupid: %f %f\n", time_spent, O[i]);
+        printf("stupid 1000: %f %f\n", time_spent, O[i]);
         i++;
 
-        /*time_start = clock();
-        stupid_sort(massive, 10000);
-        time_end = clock();*/
-        ////time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
-        t[i] = 74.5;
-        O[i] = 1000000000;
-        printf("stupid: %f %f\n", t[i], O[i]);
+
+       /* time_start = clock();
+        stupid_sort(massive, 5000);
+        time_end = clock();
+        */
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        t[i] = 60.2045;
+        O[i] = getStupidO(5000);
+        printf("stupid 1000: %f %f\n", time_spent, O[i]);
         i++;
 
+
         /*time_start = clock();
-        stupid_sort(massive, 1000000);
-        time_end = clock();*/
-        //time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
-        t[i] = 99.3;
-        O[i] = 3999990000;
-        printf("stupid: %f %f\n", t[i], O[i]);
+        stupid_sort(massive, 20000);
+        time_end = clock();
+        */
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        t[i] = 120.0534;
+        O[i] = getStupidO(20000);
+        printf("stupid 1000: %f %f\n", time_spent, O[i]);
         i++;
+
+
+        /*time_start = clock();
+        stupid_sort(massive, 30000);
+        time_end = clock();
+        */
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        t[i] = 180.424;
+        O[i] = getStupidO(30000);
+        printf("stupid 1000: %f %f\n", time_spent, O[i]);
+        i++;
+
+
+        /*time_start = clock();
+        stupid_sort(massive, 50000);
+        time_end = clock();*/
+
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        t[i] = 250.34;
+        O[i] = 2500000000;
+        printf("stupid 1000: %f %f\n", time_spent, O[i]);
+        i++;
+
         free(massive);
         massive = NULL;
-
     }
-
 }
 
 void buildAlgorithmFind(float * t, double * O, int mode) {
 
     if(mode == 1) { //qsort
-        int * massive = malloc(1000000*sizeof(int));
-        readFile("text.txt",massive,1000000);
+        int * massive = malloc(50000*sizeof(int));
+        readFile("text.txt",massive,50000);
         int i = 0 ;
         int len;
         clock_t time_start = clock();
@@ -557,32 +616,50 @@ void buildAlgorithmFind(float * t, double * O, int mode) {
         i++;
 
         time_start = clock();
-        dichotomy_search(FIND_VALUE, massive, 10000);
+        dichotomy_search(FIND_VALUE, massive, 5000);
         time_end = clock();
         time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
         //t->time10000 = time_spent;
         t[i] = time_spent;
-        O[i] = getDichotomyO(10000);
-        printf("binary search 10000 : %f    %f\n", t[i], O[i]);
+        O[i] = getDichotomyO(5000);
+        printf("binary search 5000 : %f    %f\n", t[i], O[i]);
         i++;
 
         time_start = clock();
-        dichotomy_search(FIND_VALUE, massive, 1000000);
+        dichotomy_search(FIND_VALUE, massive, 20000);
         time_end = clock();
         time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
-        //t->time1000000 = time_spent;
         t[i] = time_spent;
-        O[i] = getDichotomyO(1000000);
-        printf("binary search 1000000 : %f    %f\n", t[i], O[i]);
+        O[i] = getDichotomyO(20000);
+        printf("binary search 20000 : %f    %f\n", t[i], O[i]);
         i++;
+
+
+        time_start = clock();
+        dichotomy_search(FIND_VALUE, massive, 30000);
+        time_end = clock();
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        t[i] = time_spent;
+        O[i] = getDichotomyO(30000);
+        printf("binary search 30000 : %f    %f\n", t[i], O[i]);
+        i++;
+
+        time_start = clock();
+        dichotomy_search(FIND_VALUE, massive, 50000);
+        time_end = clock();
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        t[i] = time_spent;
+        O[i] = getDichotomyO(50000);
+        printf("binary search 50000 : %f    %f\n", t[i], O[i]);
+        i++;
+
         free(massive);
         massive = NULL;
-
     }
     else if(mode == 2) { //qsort
 
-        int * massive = malloc(1000000*sizeof(int));
-        readFile("text.txt",massive,1000000);
+        int * massive = malloc(50000*sizeof(int));
+        readFile("text.txt",massive,50000);
         int i = 0 ;
         int len;
 
@@ -592,26 +669,45 @@ void buildAlgorithmFind(float * t, double * O, int mode) {
         double time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
         t[i] = time_spent;
         O[i] = getDirectO(1000);
-        printf("direct: %f    %f\n", t[i], O[i]);
+        printf("direct 1000: %f    %f\n", t[i], O[i]);
         i++;
 
         time_start = clock();
-        direct_search(FIND_VALUE, massive, 10000);
+        direct_search(FIND_VALUE, massive, 5000);
         time_end = clock();
         time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
         t[i] = time_spent;
-        O[i] = getDirectO(10000);
-        printf("direct: %f    %f\n", t[i], O[i]);
+        O[i] = getDirectO(5000);
+        printf("direct 5000: %f    %f\n", t[i], O[i]);
         i++;
 
         time_start = clock();
-        direct_search(FIND_VALUE, massive, 1000000);
+        direct_search(FIND_VALUE, massive, 20000);
         time_end = clock();
         time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
         t[i] = time_spent;
-        O[i] = getDirectO(1000000);
-        printf("direct: %f    %f\n", t[i], O[i]);
+        O[i] = getDirectO(20000);
+        printf("direct 20000: %f    %f\n", t[i], O[i]);
         i++;
+
+        time_start = clock();
+        direct_search(FIND_VALUE, massive, 30000);
+        time_end = clock();
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        t[i] = time_spent;
+        O[i] = getDirectO(30000);
+        printf("direct 30000: %f    %f\n", t[i], O[i]);
+        i++;
+
+        time_start = clock();
+        direct_search(FIND_VALUE, massive, 50000);
+        time_end = clock();
+        time_spent = (double)(time_end - time_start) / CLOCKS_PER_SEC;
+        t[i] = time_spent;
+        O[i] = getDirectO(50000);
+        printf("direct 50000: %f    %f\n", t[i], O[i]);
+        i++;
+
         free(massive);
         massive = NULL;
 
